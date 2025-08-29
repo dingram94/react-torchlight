@@ -2,7 +2,6 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import { terser } from "rollup-plugin-terser";
 
 // Define all entry points
 const entries = {
@@ -22,12 +21,6 @@ const outputs = Object.entries(entries).map(([name, input]) => ({
   input,
   output: [
     {
-      file: `dist/${name}.js`,
-      format: "cjs",
-      sourcemap: true,
-      exports: "named",
-    },
-    {
       file: `dist/${name}.esm.js`,
       format: "esm",
       sourcemap: true,
@@ -39,9 +32,8 @@ const outputs = Object.entries(entries).map(([name, input]) => ({
     resolve(),
     commonjs(),
     typescript({
-      tsconfig: "./tsconfig.json",
+      tsconfig: "./tsconfig.rollup.json",
     }),
-    terser(),
   ],
   external: ["react", "react-dom"],
 }));
