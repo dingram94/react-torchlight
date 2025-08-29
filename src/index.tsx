@@ -28,6 +28,14 @@ import {
 // Re-export the generated types for convenience
 export type { TOUR_IDS, TourId };
 
+// Re-export types from types.ts
+export type {
+  SpotlightContextProps,
+  SpotlightProviderProps,
+  SpotlightStep,
+  SpotlightTour,
+} from "./types";
+
 // Helper type to get registered tour IDs
 type RegisteredTourIds = keyof SpotlightToursRegistry extends never
   ? string
@@ -364,3 +372,11 @@ export const useSpotlightSteps = <
 // Helper function to define tours (provides better IntelliSense)
 export const defineTours = <T extends Record<string, any>>(tours: T): T =>
   tours;
+
+// Re-export components
+export { SpotlightOverlay } from "./components/spotlight-overlay";
+
+// Re-export plugins
+export { default as createTypeScriptPlugin } from "./plugins/typescript-plugin";
+export { createTransformer as createTypeScriptTransformer } from "./plugins/typescript-plugin";
+export { vitePluginTours as createVitePlugin } from "./plugins/vite-plugin";

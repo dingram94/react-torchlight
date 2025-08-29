@@ -1,14 +1,25 @@
 {
-  "name": "react-spotlight",
+  "name": "react-torchlight",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "react",
     "tour",
     "spotlight",
+    "tour",
+    "torchlight",
     "walkthrough",
     "guide",
     "onboarding",
