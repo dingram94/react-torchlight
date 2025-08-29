@@ -1,9 +1,36 @@
 {
-  "name": "react-torchlight",
+  "name": "@react-torchlight/core",
   "version": "1.0.1",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./context": {
+      "import": "./dist/context.esm.js",
+      "require": "./dist/context.js",
+      "types": "./dist/context.d.ts"
+    },
+    "./plugins/vite": {
+      "import": "./dist/plugins/vite.esm.js",
+      "require": "./dist/plugins/vite.js",
+      "types": "./dist/plugins/vite.d.ts"
+    },
+    "./plugins/typescript": {
+      "import": "./dist/plugins/typescript.esm.js",
+      "require": "./dist/plugins/typescript.js",
+      "types": "./dist/plugins/typescript.d.ts"
+    },
+    "./types": {
+      "import": "./dist/types.esm.js",
+      "require": "./dist/types.js",
+      "types": "./dist/types.d.ts"
+    }
+  },
   "files": [
     "dist",
     "README.md"
@@ -30,7 +57,7 @@
   "description": "A React library for creating interactive tours and walkthroughs.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dingram94/react-spotlight"
+    "url": "https://github.com/dingram94/react-torchlight"
   },
   "dependencies": {
     "react": ">=19.0.0",

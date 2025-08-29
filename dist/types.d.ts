@@ -1,5 +1,5 @@
 import React from "react";
-export type SpotlightStep<T extends string = string> = {
+export type TorchlightStep<T extends string = string> = {
     id: T;
     tourId: string;
     order: number;
@@ -8,15 +8,15 @@ export type SpotlightStep<T extends string = string> = {
     placement?: "top" | "bottom" | "left" | "right";
     target: React.RefObject<any>;
 };
-export type SpotlightTour = {
+export type TorchlightTour = {
     id: string;
-    steps: SpotlightStep[];
+    steps: TorchlightStep[];
     currentStepIndex: number;
     isActive: boolean;
 };
-export interface SpotlightContextProps<TourIds extends string = string> {
-    tours: Map<string, SpotlightTour>;
-    registerStep: (step: Omit<SpotlightStep, "target">, ref: React.RefObject<any>) => void;
+export interface TorchlightContextProps<TourIds extends string = string> {
+    tours: Map<string, TorchlightTour>;
+    registerStep: (step: Omit<TorchlightStep, "target">, ref: React.RefObject<any>) => void;
     unregisterStep: (stepId: string, tourId: TourIds) => void;
     startTour: (tourId: TourIds) => void;
     stopTour: (tourId: TourIds) => void;
@@ -25,11 +25,11 @@ export interface SpotlightContextProps<TourIds extends string = string> {
     goToStep: (tourId: TourIds, stepIndex: number) => void;
     activeTour: TourIds | null;
 }
-export type SpotlightProviderProps = {
+export type TorchlightProviderProps = {
     children: React.ReactNode;
-    overlayProps?: Partial<SpotlightOverlayProps>;
+    overlayProps?: Partial<TorchlightOverlayProps>;
 };
-export type SpotlightOverlayProps = {
+export type TorchlightOverlayProps = {
     className?: string;
     overlayColor?: string;
     overlayOpacity?: number;
