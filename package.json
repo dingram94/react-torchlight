@@ -1,6 +1,6 @@
 {
-  "name": "@react-torchlight/core",
-  "version": "1.0.1",
+  "name": "react-torchlight",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",

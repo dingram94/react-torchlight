@@ -41,7 +41,7 @@ const outputs = Object.entries(entries).map(([name, input]) => ({
     typescript({
       tsconfig: "./tsconfig.json",
     }),
-    // terser(),
+    terser(),
   ],
   external: ["react", "react-dom"],
 }));

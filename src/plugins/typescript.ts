@@ -62,21 +62,6 @@ export default function createPlugin(
         }
       }
 
-      // Also look for defineTours calls
-      if (ts.isCallExpression(node)) {
-        const expression = node.expression;
-        if (ts.isIdentifier(expression) && expression.text === "defineTours") {
-          const firstArg = node.arguments[0];
-          if (ts.isObjectLiteralExpression(firstArg)) {
-            firstArg.properties.forEach((prop) => {
-              if (ts.isPropertyAssignment(prop) && ts.isIdentifier(prop.name)) {
-                tourIds.add(prop.name.text);
-              }
-            });
-          }
-        }
-      }
-
       ts.forEachChild(node, visit);
     }
 
@@ -183,24 +168,6 @@ export function createTransformer(
             const firstArg = node.arguments[0];
             if (ts.isStringLiteral(firstArg) && firstArg.text.trim() !== "") {
               tourIds.add(firstArg.text);
-            }
-          }
-
-          // Handle defineTours calls
-          if (
-            ts.isIdentifier(expression) &&
-            expression.text === "defineTours"
-          ) {
-            const firstArg = node.arguments[0];
-            if (ts.isObjectLiteralExpression(firstArg)) {
-              firstArg.properties.forEach((prop) => {
-                if (
-                  ts.isPropertyAssignment(prop) &&
-                  ts.isIdentifier(prop.name)
-                ) {
-                  tourIds.add(prop.name.text);
-                }
-              });
             }
           }
         }

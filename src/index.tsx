@@ -24,9 +24,11 @@ export {
 export { TorchlightOverlay } from "./components/torchlight-overlay";
 
 // Re-export plugins
-export { default as createTypeScriptPlugin } from "./plugins/typescript";
-export { createTransformer as createTypeScriptTransformer } from "./plugins/typescript";
-export { torchlightVitePlugin as createVitePlugin } from "./plugins/vite";
+export {
+  createTransformer as torchlightTypeScriptPlugin,
+  default as createTypeScriptPlugin,
+} from "./plugins/typescript";
+export { torchlightVitePlugin } from "./plugins/vite";
 
 // Re-export the generated types for convenience
 export type { TOUR_IDS, TourId };

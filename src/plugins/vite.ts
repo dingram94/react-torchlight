@@ -2,13 +2,13 @@ import * as fs from "fs";
 import * as path from "path";
 import { Plugin } from "vite";
 
-interface VitePluginToursOptions {
+interface TorchlightVitePluginOptions {
   rootFolder?: string;
   outputPath?: string;
 }
 
 export function torchlightVitePlugin(
-  options: VitePluginToursOptions = {}
+  options: TorchlightVitePluginOptions = {}
 ): Plugin {
   const { rootFolder = "src", outputPath = "torchlight.gen.ts" } = options;
 
@@ -35,23 +35,12 @@ export function torchlightVitePlugin(
       // This is a simplified version - the TypeScript plugin provides more robust parsing
       const useTorchlightStepsRegex =
         /useTorchlightSteps\s*\(\s*["']([^"']+)["']/g;
-      const defineToursRegex = /defineTours\s*\(\s*\{([^}]+)\}/g;
 
       let match;
       while ((match = useTorchlightStepsRegex.exec(code)) !== null) {
         const tourId = match[1];
         if (tourId && tourId.trim() !== "" && tourId !== "tourId") {
           tourIds.add(tourId);
-        }
-      }
-
-      // Extract from defineTours calls
-      while ((match = defineToursRegex.exec(code)) !== null) {
-        const tourObject = match[1];
-        const propertyRegex = /(\w+)\s*:/g;
-        let propMatch;
-        while ((propMatch = propertyRegex.exec(tourObject)) !== null) {
-          tourIds.add(propMatch[1]);
         }
       }
 
@@ -76,7 +65,7 @@ export function torchlightVitePlugin(
 // Generated on: ${new Date().toISOString()}
 
 declare module "ReactTorchlight" {
-  interface SpotlightToursRegistry {
+  interface TorchlightToursRegistry {
 ${sortedTourIds.map((id) => `    "${id}": never;`).join("\n")}
   }
 }
