@@ -22,10 +22,8 @@
 - 🎯 **Type-Safe Tour IDs** - Auto-generated TypeScript types for your tour IDs
 - 🎨 **Customizable Styling** - Full control over appearance with CSS variables and custom props
 - ♿ **Accessibility First** - Built with WCAG guidelines in mind, keyboard navigation included
-- 📱 **Mobile Friendly** - Responsive design that works on all devices
 - 🔧 **Developer Experience** - Vite and TypeScript plugins for seamless integration
 - 🎭 **Flexible Positioning** - Smart tooltip positioning that adapts to screen boundaries
-- 🌙 **Dark Mode Support** - Built-in dark mode styles
 - ⚡ **Performance Optimized** - Minimal bundle size with tree-shaking support
 
 ## 📦 Installation
@@ -33,12 +31,6 @@
 ```bash
 # npm
 npm install react-torchlight
-
-# yarn
-yarn add react-torchlight
-
-# pnpm
-pnpm add react-torchlight
 ```
 
 ### CSS Import
