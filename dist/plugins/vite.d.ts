@@ -1,7 +1,7 @@
 import { Plugin } from "vite";
-interface VitePluginToursOptions {
+interface TorchlightVitePluginOptions {
     rootFolder?: string;
     outputPath?: string;
 }
-export declare function vitePluginTours(options?: VitePluginToursOptions): Plugin;
+export declare function torchlightVitePlugin(options?: TorchlightVitePluginOptions): Plugin;
 export {};
