@@ -35,7 +35,7 @@ const outputs = Object.entries(entries).map(([name, input]) => {
       {
         file: `dist/${name}.${isPlugin ? "esm" : "esm"}.js`,
         format: "esm",
-        sourcemap: true,
+        sourcemap: process.env.NODE_ENV !== "production",
         exports: "named",
       },
     ],
@@ -51,7 +51,7 @@ const outputs = Object.entries(entries).map(([name, input]) => {
       }),
     ],
     external: isPlugin
-      ? ["fs", "path", "vite"]
+      ? ["fs", "path", "vite", "typescript"]
       : ["react", "react-dom", "react/jsx-runtime"],
   };
 });

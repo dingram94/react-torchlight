@@ -1,0 +1,25 @@
+# Source files
+src/
+tsconfig*.json
+rollup.config.js
+
+# Development files
+.gitignore
+.vscode/
+*.log
+*.tmp
+
+# Documentation (keep README.md)
+docs/
+
+# Test files
+test/
+tests/
+**/*.test.*
+**/*.spec.*
+
+**/*.map
+
+# Large unnecessary files
+node_modules/
+.git/
