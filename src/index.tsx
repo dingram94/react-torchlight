@@ -1,42 +1,25 @@
 import React from "react";
 import { TorchlightOverlay } from "./components/torchlight-overlay";
 import { TorchlightInternalProvider } from "./context";
+import { TorchlightConfig, TorchlightOverlayProps } from "./types";
 
-// Re-export everything from context
-export {
-  TorchlightContext,
-  TorchlightInternalProvider,
-  useTorchlight,
-  useTorchlightSteps,
-} from "./context";
-
-// Re-export components
-export { TorchlightOverlay } from "./components/torchlight-overlay";
-
-// Re-export plugins
-export {
-  createTransformer as torchlightTypeScriptPlugin,
-  default as createTypeScriptPlugin,
-} from "./plugins/typescript";
-export { torchlightVitePlugin } from "./plugins/vite";
-
-// Re-export types from types.ts
-export type {
-  TorchlightContextProps,
-  TorchlightProviderProps,
-  TorchlightStep,
-  TorchlightTour,
-} from "./types";
-
-// Create a provider that includes the overlay
-export const TorchlightProvider: React.FC<{
+export const TorchlightProvider = ({
+  children,
+  overlayProps = {},
+  config = {},
+}: {
   children: React.ReactNode;
-  overlayProps?: any;
-}> = ({ children, overlayProps = {} }) => {
+  overlayProps?: Partial<TorchlightOverlayProps>;
+  config?: TorchlightConfig;
+}) => {
   return (
-    <TorchlightInternalProvider overlayProps={overlayProps}>
+    <TorchlightInternalProvider overlayProps={overlayProps} config={config}>
       {children}
       <TorchlightOverlay {...overlayProps} />
     </TorchlightInternalProvider>
   );
 };
+
+export { useTorchlight, useTorchlightSteps } from "./context";
+export { torchlightVitePlugin } from "./plugins/vite";
+export type { TorchlightToursRegistry } from "./types";

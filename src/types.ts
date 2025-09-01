@@ -1,5 +1,8 @@
 import React from "react";
 
+// This interface can be augmented by the user's generated torchlight.gen.ts file
+export interface TorchlightToursRegistry {}
+
 export type TorchlightStep<T extends string = string> = {
   id: T;
   tourId: string;
@@ -17,7 +20,16 @@ export type TorchlightTour = {
   isActive: boolean;
 };
 
-export interface TorchlightContextProps<TourIds extends string = string> {
+export interface TorchlightConfig {
+  locale?: {
+    skipButtonText?: string;
+    nextButtonText?: string;
+    prevButtonText?: string;
+    doneButtonText?: string;
+  };
+}
+
+export interface TorchlightContextProps<TourIds extends string> {
   tours: Map<string, TorchlightTour>;
   registerStep: (
     step: Omit<TorchlightStep, "target">,
@@ -30,11 +42,13 @@ export interface TorchlightContextProps<TourIds extends string = string> {
   prevStep: (tourId: TourIds) => void;
   goToStep: (tourId: TourIds, stepIndex: number) => void;
   activeTour: TourIds | null;
+  config?: TorchlightConfig;
 }
 
 export type TorchlightProviderProps = {
   children: React.ReactNode;
   overlayProps?: Partial<TorchlightOverlayProps>;
+  config?: TorchlightConfig;
 };
 
 export type TorchlightOverlayProps = {

@@ -12,7 +12,8 @@ export const TorchlightOverlay: React.FC<TorchlightOverlayProps> = ({
   showTooltip = true,
   tooltipClassName = "",
 }) => {
-  const { tours, activeTour, nextStep, prevStep, stopTour } = useTorchlight();
+  const { tours, activeTour, nextStep, prevStep, stopTour, config } =
+    useTorchlight();
   const [highlightRect, setHighlightRect] = useState<DOMRect | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -153,7 +154,7 @@ export const TorchlightOverlay: React.FC<TorchlightOverlayProps> = ({
                   className="torchlight-tooltip__button"
                   onClick={() => prevStep(activeTour!)}
                 >
-                  Previous
+                  {config?.locale?.prevButtonText || "Previous"}
                 </button>
               )}
 
@@ -161,7 +162,7 @@ export const TorchlightOverlay: React.FC<TorchlightOverlayProps> = ({
                 className="torchlight-tooltip__button"
                 onClick={() => stopTour(activeTour!)}
               >
-                Skip
+                {config?.locale?.skipButtonText || "Skip"}
               </button>
 
               <button
@@ -169,8 +170,8 @@ export const TorchlightOverlay: React.FC<TorchlightOverlayProps> = ({
                 onClick={() => nextStep(activeTour!)}
               >
                 {currentTour.currentStepIndex === currentTour.steps.length - 1
-                  ? "Finish"
-                  : "Next"}
+                  ? config?.locale?.doneButtonText || "Finish"
+                  : config?.locale?.nextButtonText || "Next"}
               </button>
             </div>
           </div>

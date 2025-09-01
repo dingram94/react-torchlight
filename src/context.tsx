@@ -13,27 +13,23 @@ import {
   TorchlightProviderProps,
   TorchlightStep,
   TorchlightTour,
+  TorchlightToursRegistry,
+  TorchlightConfig,
 } from "./types";
 
-declare global {
-  interface TorchlightToursRegistry {}
-}
-
-// Helper type to get registered tour IDs
-// This will use the augmented interface from the generated torchlight.gen.ts file
-type RegisteredTourIds = keyof TorchlightToursRegistry extends never
-  ? string
-  : Extract<keyof TorchlightToursRegistry, string>;
-
-export const TorchlightContext =
-  createContext<TorchlightContextProps<RegisteredTourIds> | null>(null);
+export const TorchlightContext = createContext<TorchlightContextProps<
+  keyof TorchlightToursRegistry
+> | null>(null);
 
 export const TorchlightInternalProvider: React.FC<TorchlightProviderProps> = ({
   children,
   overlayProps = {},
+  config = {},
 }) => {
   const [tours, setTours] = useState<Map<string, TorchlightTour>>(new Map());
-  const [activeTour, setActiveTour] = useState<RegisteredTourIds | null>(null);
+  const [activeTour, setActiveTour] = useState<
+    keyof TorchlightToursRegistry | null
+  >(null);
 
   const registerStep = useCallback(
     (step: Omit<TorchlightStep, "target">, ref: React.RefObject<any>) => {
@@ -87,7 +83,7 @@ export const TorchlightInternalProvider: React.FC<TorchlightProviderProps> = ({
   );
 
   const unregisterStep = useCallback(
-    (stepId: string, tourId: RegisteredTourIds) => {
+    (stepId: string, tourId: keyof TorchlightToursRegistry) => {
       setTours((prev) => {
         const newTours = new Map(prev);
         const tour = newTours.get(tourId as string);
@@ -118,7 +114,7 @@ export const TorchlightInternalProvider: React.FC<TorchlightProviderProps> = ({
     [activeTour]
   );
 
-  const startTour = useCallback((tourId: RegisteredTourIds) => {
+  const startTour = useCallback((tourId: keyof TorchlightToursRegistry) => {
     setTours((prev) => {
       const newTours = new Map(prev);
       const tour = newTours.get(tourId as string);
@@ -154,7 +150,7 @@ export const TorchlightInternalProvider: React.FC<TorchlightProviderProps> = ({
   }, []);
 
   const stopTour = useCallback(
-    (tourId: RegisteredTourIds) => {
+    (tourId: keyof TorchlightToursRegistry) => {
       setTours((prev) => {
         const newTours = new Map(prev);
         const tour = newTours.get(tourId as string);
@@ -176,7 +172,7 @@ export const TorchlightInternalProvider: React.FC<TorchlightProviderProps> = ({
     [activeTour]
   );
 
-  const nextStep = useCallback((tourId: RegisteredTourIds) => {
+  const nextStep = useCallback((tourId: keyof TorchlightToursRegistry) => {
     setTours((prev) => {
       const newTours = new Map(prev);
       const tour = newTours.get(tourId as string);
@@ -200,7 +196,7 @@ export const TorchlightInternalProvider: React.FC<TorchlightProviderProps> = ({
     });
   }, []);
 
-  const prevStep = useCallback((tourId: RegisteredTourIds) => {
+  const prevStep = useCallback((tourId: keyof TorchlightToursRegistry) => {
     setTours((prev) => {
       const newTours = new Map(prev);
       const tour = newTours.get(tourId as string);
@@ -217,7 +213,7 @@ export const TorchlightInternalProvider: React.FC<TorchlightProviderProps> = ({
   }, []);
 
   const goToStep = useCallback(
-    (tourId: RegisteredTourIds, stepIndex: number) => {
+    (tourId: keyof TorchlightToursRegistry, stepIndex: number) => {
       setTours((prev) => {
         const newTours = new Map(prev);
         const tour = newTours.get(tourId as string);
@@ -246,6 +242,7 @@ export const TorchlightInternalProvider: React.FC<TorchlightProviderProps> = ({
       prevStep,
       goToStep,
       activeTour,
+      config,
     }),
     [
       tours,
@@ -257,6 +254,7 @@ export const TorchlightInternalProvider: React.FC<TorchlightProviderProps> = ({
       prevStep,
       goToStep,
       activeTour,
+      config,
     ]
   );
 
@@ -267,7 +265,9 @@ export const TorchlightInternalProvider: React.FC<TorchlightProviderProps> = ({
   );
 };
 
-export const useTorchlight = () => {
+export const useTorchlight = (): TorchlightContextProps<
+  keyof TorchlightToursRegistry
+> => {
   const context = useContext(TorchlightContext);
 
   if (!context) {
@@ -327,7 +327,7 @@ export const useTorchlightSteps = <
 
     return () => {
       registeredStepsRef.current.forEach((stepId) => {
-        unregisterStep(stepId, tourId as string);
+        unregisterStep(stepId, tourId);
       });
       registeredStepsRef.current.clear();
     };

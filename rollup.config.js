@@ -2,40 +2,58 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
+import postcss from "rollup-plugin-postcss";
 
-// Define all entry points
+// Define entry points - main library and plugins
 const entries = {
-  // Main library
   index: "src/index.tsx",
-  // Context
-  context: "src/context.tsx",
-  // Plugins
   "plugins/typescript": "src/plugins/typescript.ts",
   "plugins/vite": "src/plugins/vite.ts",
-  // Types
-  types: "src/types.ts",
+};
+
+// Separate CSS entry
+const cssEntry = {
+  input: "src/style.css",
+  output: {
+    file: "dist/css/styles.css",
+  },
+  plugins: [
+    postcss({
+      extract: true,
+      minimize: true,
+    }),
+  ],
 };
 
 // Create output configurations for each entry
-const outputs = Object.entries(entries).map(([name, input]) => ({
-  input,
-  output: [
-    {
-      file: `dist/${name}.esm.js`,
-      format: "esm",
-      sourcemap: true,
-      exports: "named",
-    },
-  ],
-  plugins: [
-    peerDepsExternal(),
-    resolve(),
-    commonjs(),
-    typescript({
-      tsconfig: "./tsconfig.rollup.json",
-    }),
-  ],
-  external: ["react", "react-dom"],
-}));
+const outputs = Object.entries(entries).map(([name, input]) => {
+  const isPlugin = name.startsWith("plugins/");
 
-export default outputs;
+  return {
+    input,
+    output: [
+      {
+        file: `dist/${name}.${isPlugin ? "esm" : "esm"}.js`,
+        format: "esm",
+        sourcemap: true,
+        exports: "named",
+      },
+    ],
+    plugins: [
+      peerDepsExternal(),
+      resolve({
+        browser: !isPlugin,
+        preferBuiltins: isPlugin,
+      }),
+      commonjs(),
+      typescript({
+        tsconfig: "./tsconfig.rollup.json",
+      }),
+    ],
+    external: isPlugin
+      ? ["fs", "path", "vite"]
+      : ["react", "react-dom", "react/jsx-runtime"],
+  };
+});
+
+export default [...outputs, cssEntry];

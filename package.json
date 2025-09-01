@@ -10,21 +10,31 @@
       "import": "./dist/index.esm.js",
       "types": "./dist/index.d.ts"
     },
-    "./context": {
-      "import": "./dist/context.esm.js",
-      "types": "./dist/context.d.ts"
+    "./css/styles.css": "./dist/css/styles.css",
+    "./plugins": {
+      "types": "./dist/plugins/index.d.ts",
+      "import": "./dist/plugins/index.esm.js",
+      "require": "./dist/plugins/index.esm.js",
+      "default": "./dist/plugins/index.esm.js"
     },
     "./plugins/vite": {
+      "types": "./dist/plugins/vite.d.ts",
       "import": "./dist/plugins/vite.esm.js",
-      "types": "./dist/plugins/vite.d.ts"
+      "require": "./dist/plugins/vite.esm.js",
+      "default": "./dist/plugins/vite.esm.js"
     },
     "./plugins/typescript": {
+      "types": "./dist/plugins/typescript.d.ts",
       "import": "./dist/plugins/typescript.esm.js",
-      "types": "./dist/plugins/typescript.d.ts"
-    },
-    "./types": {
-      "import": "./dist/types.esm.js",
-      "types": "./dist/types.d.ts"
+      "require": "./dist/plugins/typescript.esm.js",
+      "default": "./dist/plugins/typescript.esm.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "plugins/*": [
+        "./dist/plugins/*.d.ts"
+      ]
     }
   },
   "files": [
@@ -71,6 +81,7 @@
     "@types/react-dom": "^19.1.9",
     "rollup": "^2.79.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
     "tslib": "^2.8.1",
     "typescript": "^5.9.2",
     "vite": "^7.1.3"
