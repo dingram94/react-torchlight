@@ -63,7 +63,11 @@
   "description": "A React library for creating interactive tours and walkthroughs.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dingram94/react-torchlight"
+    "url": "https://github.com/dingram94/react-torchlight.git"
+  },
+  "homepage": "https://github.com/dingram94/react-torchlight#readme",
+  "bugs": {
+    "url": "https://github.com/dingram94/react-torchlight/issues"
   },
   "dependencies": {
     "react": ">=19.0.0",
